@@ -36,8 +36,6 @@ export default NextAuth({
           )
         );
 
-        console.log('OLHA AQUIIIII: ', userActiveSubscription);
-
         return {
           ...session,
           activeSubscription: userActiveSubscription,

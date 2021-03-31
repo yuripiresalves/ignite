@@ -51,7 +51,6 @@ export const getServerSideProps: GetServerSideProps = async ({
       },
     };
   }
-  console.log(session);
 
   const prismic = getPrismicClient(req);
 

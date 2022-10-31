@@ -1,61 +1,58 @@
+import { useState } from 'react';
+import { AddTaskForm } from './components/AddTaskForm';
+import { EmptyTasks } from './components/EmptyTasks';
 import { Header } from './components/Header';
 import { Task } from './components/Task';
 
 import styles from './App.module.css';
 
 import './global.css';
-import { AddTaskForm } from './components/AddTaskForm';
-import { EmptyTasks } from './components/EmptyTasks';
 
-const tasks = [
-  {
-    id: 1,
-    title:
-      'Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.',
-    isDone: false,
-  },
-  {
-    id: 2,
-    title: 'Integer ',
-    isDone: false,
-  },
-  {
-    id: 4,
-    title:
-      'Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.',
-    isDone: true,
-  },
-  {
-    id: 3,
-    title: 'Integer ',
-    isDone: true,
-  },
-  {
-    id: 5,
-    title: 'Integer ',
-    isDone: true,
-  },
-  {
-    id: 6,
-    title: 'Integer ',
-    isDone: true,
-  },
-];
+interface Task {
+  id: string;
+  title: string;
+  isDone: boolean;
+}
 
 function App() {
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  const tasksDone = tasks.filter((task) => task.isDone === true);
+
+  function handleToggleTaskDone(id: string) {
+    const newTask = tasks.map((task) =>
+      task.id === id
+        ? {
+            ...task,
+            isDone: !task.isDone,
+          }
+        : task
+    );
+
+    setTasks(newTask);
+  }
+
+  function handleDeleteTask(id: string) {
+    const tasksWithoutDeletedOne = tasks.filter((task) => task.id !== id);
+
+    setTasks(tasksWithoutDeletedOne);
+  }
+
   return (
     <div className="App">
       <Header />
       <main className={styles.wrapper}>
         <header>
-          <AddTaskForm />
+          <AddTaskForm tasks={tasks} setTasks={setTasks} />
           <div className={styles.allTasks}>
             <strong>Tarefas criadas</strong>
             <span>{tasks.length}</span>
           </div>
           <div className={styles.tasksDone}>
             <strong>Concluídas</strong>
-            <span>{`0 ${tasks.length > 0 ? `de ${tasks.length}` : ''}`}</span>
+            <span>{`${tasksDone.length} ${
+              tasks.length > 0 ? `de ${tasks.length}` : ''
+            }`}</span>
           </div>
         </header>
         {tasks.length > 0 ? (
@@ -66,6 +63,8 @@ function App() {
                 id={task.id}
                 title={task.title}
                 isDone={task.isDone}
+                handleToggleTaskDone={handleToggleTaskDone}
+                handleDeleteTask={handleDeleteTask}
               />
             );
           })

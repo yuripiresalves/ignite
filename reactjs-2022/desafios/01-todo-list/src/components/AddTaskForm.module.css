@@ -32,6 +32,11 @@
   gap: 8px;
 }
 
-.addTaskForm button:hover {
+.addTaskForm button:not(:disabled):hover {
   background: var(--purple);
+}
+
+.addTaskForm button:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
 }

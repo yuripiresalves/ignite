@@ -4,30 +4,34 @@ import { Check, Trash } from 'phosphor-react';
 import styles from './Task.module.css';
 
 interface TaskProps {
-  id: number;
+  id: string;
   title: string;
   isDone: boolean;
+  handleToggleTaskDone: (id: string) => void;
+  handleDeleteTask: (id: string) => void;
 }
 
-export function Task({ id, title, isDone }: TaskProps) {
+export function Task({
+  id,
+  title,
+  isDone,
+  handleToggleTaskDone,
+  handleDeleteTask,
+}: TaskProps) {
   return (
     <>
       <div className={`${styles.task}  ${isDone && styles.taskDone}`}>
-        <div className={styles.group}>
-          <Checkbox.Root
-            checked={isDone}
-            className={styles.checkbox}
-            id={id.toString()}
-          >
+        <div className={styles.group} onClick={() => handleToggleTaskDone(id)}>
+          <Checkbox.Root checked={isDone} className={styles.checkbox}>
             <Checkbox.Indicator>
               <Check weight="bold" size={12} />
             </Checkbox.Indicator>
           </Checkbox.Root>
-          <label htmlFor={id.toString()} title={title}>
+          <label title={title} onClick={() => handleToggleTaskDone(id)}>
             {title}
           </label>
         </div>
-        <button title="Deletar tarefa">
+        <button title="Deletar tarefa" onClick={() => handleDeleteTask(id)}>
           <Trash />
         </button>
       </div>

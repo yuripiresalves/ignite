@@ -1,0 +1,40 @@
+.wrapper {
+  max-width: 46rem;
+  margin: 90px auto;
+}
+
+.wrapper header {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.wrapper header .allTasks {
+  color: var(--purple);
+  font-size: 0.875rem;
+}
+
+.wrapper header .tasksDone {
+  color: var(--green);
+  font-size: 0.875rem;
+}
+
+.wrapper header span {
+  color: var(--gray-200);
+  font-weight: bold;
+  font-size: 0.75rem;
+  margin-left: 8px;
+  background: var(--gray-400);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 87.5%;
+  }
+  .wrapper {
+    padding: 0 1rem;
+  }
+}

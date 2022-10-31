@@ -1,0 +1,14 @@
+.header {
+  height: 12.5rem;
+  background: var(--gray-700);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 4.5rem;
+  position: relative;
+}
+
+.header > img {
+  width: 7.875rem;
+  height: fit-content;
+}

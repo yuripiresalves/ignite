@@ -1,0 +1,62 @@
+.task {
+  height: 4.5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--gray-500);
+  padding: 1rem 0.875rem;
+  border: 1px solid var(--gray-400);
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+}
+
+.task > div {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+}
+
+.task + .task {
+  margin-top: 0.75rem;
+}
+
+.task .checkbox {
+  min-width: 1.125rem;
+  min-height: 1.125rem;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid var(--purple);
+  color: var(--gray-100);
+}
+
+.taskDone .checkbox {
+  border: 2px solid var(--green-dark);
+  background: var(--green-dark);
+}
+
+.task label {
+  line-height: 140%;
+  cursor: pointer;
+  font-size: 0.875rem;
+  gap: 12px;
+  max-width: 39.5rem;
+}
+.taskDone label {
+  text-decoration: line-through;
+  color: var(--gray-300);
+}
+.task button {
+  background: transparent;
+  border: 0;
+  color: var(--gray-300);
+  border-radius: 4px;
+  line-height: 0;
+  transition: color 0.2s;
+}
+
+.task > button:hover,
+.task > button:focus {
+  color: var(--danger);
+}

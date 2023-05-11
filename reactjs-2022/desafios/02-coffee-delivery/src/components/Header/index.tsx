@@ -7,11 +7,14 @@ import {
 } from './styles';
 
 import Logo from '../../assets/logo.svg';
+import { NavLink } from 'react-router-dom';
 
 export const Header = () => {
   return (
     <HeaderContainer>
-      <img src={Logo} alt="Coffe Delivery" />
+      <NavLink to="/">
+        <img src={Logo} alt="Coffe Delivery" />
+      </NavLink>
 
       <RightContainer>
         <LocationContainer>
@@ -19,7 +22,9 @@ export const Header = () => {
           <span>Porto Alegre, RS</span>
         </LocationContainer>
         <CartButton>
-          <ShoppingCartSimple weight="fill" />
+          <NavLink to="/cart">
+            <ShoppingCartSimple weight="fill" />
+          </NavLink>
         </CartButton>
       </RightContainer>
     </HeaderContainer>

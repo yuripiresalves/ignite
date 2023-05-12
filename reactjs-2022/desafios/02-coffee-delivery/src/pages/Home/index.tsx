@@ -5,13 +5,14 @@ import {
   HeroText,
   MainContainer,
 } from './styles';
+import { CoffeeCard } from '../../components/CoffeeCard';
+import coffess from '../../coffees.json';
 
 import compraImg from '../../assets/compra.svg';
 import embalagemImg from '../../assets/embalagem.svg';
 import entregaImg from '../../assets/entrega.svg';
 import cafeImg from '../../assets/cafe.svg';
 import heroIlustra from '../../assets/hero-ilustra.png';
-import { CoffeeCard } from '../../components/CoffeeCard';
 
 export const Home = () => {
   return (
@@ -55,11 +56,9 @@ export const Home = () => {
         <h2>Nossos cafés</h2>
 
         <div className="cards">
-          <CoffeeCard />
-          <CoffeeCard />
-          <CoffeeCard />
-          <CoffeeCard />
-          <CoffeeCard />
+          {coffess.map((coffee) => (
+            <CoffeeCard key={coffee.id} coffee={coffee} />
+          ))}
         </div>
       </MainContainer>
     </>

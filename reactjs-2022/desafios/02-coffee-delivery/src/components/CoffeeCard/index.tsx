@@ -1,30 +1,44 @@
-// { coffee }: CoffeeCardProps
 import { useState } from 'react';
 
 import { BuyContainer, CardContainer, TagsContainer } from './styles';
 
-import coffeeImg from '../../assets/tradicional.png';
 import { Minus, Plus, ShoppingCartSimple } from 'phosphor-react';
 
-export const CoffeeCard = () => {
+interface CoffeeCardProps {
+  coffee: {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    tags: string[];
+    image: string;
+  };
+}
+
+export const CoffeeCard = ({ coffee }: CoffeeCardProps) => {
   const [coffeeCounter, setCoffeeCounter] = useState(1);
 
   return (
     <CardContainer>
-      <img src={coffeeImg} alt="Xícara de café" />
+      <img src={coffee.image} alt="Xícara de café" />
 
       <TagsContainer>
-        <span>especial</span>
-        <span>alcoólico</span>
-        <span>gelado</span>
+        {coffee.tags.map((tag) => (
+          <span key={tag}>{tag}</span>
+        ))}
       </TagsContainer>
 
-      <h3>Expresso Tradicional</h3>
-      <p>O tradicional café feito com água quente e grãos moídos</p>
+      <h3>{coffee.name}</h3>
+      <p>{coffee.description}</p>
 
       <BuyContainer>
         <span>
-          R$ <strong>9,90</strong>
+          R${' '}
+          <strong>
+            {new Intl.NumberFormat('pt-BR', {
+              minimumSignificantDigits: 3,
+            }).format(coffee.price)}
+          </strong>
         </span>
 
         <div className="actions">

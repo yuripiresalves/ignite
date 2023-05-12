@@ -214,8 +214,23 @@ export const Order = styled.div`
     border-radius: 6px;
     transition: background 0.2s ease-in;
 
-    &:hover {
+    a {
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+    }
+
+    &:hover:not(:disabled) {
       background: ${({ theme }) => theme.colors['yellow-dark']};
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+
+      a {
+        pointer-events: none;
+      }
     }
   }
 `;
@@ -335,5 +350,30 @@ export const OrderTotal = styled.div`
   h3 {
     font-size: 1.25rem;
     color: ${({ theme }) => theme.colors['base-subtitle']};
+  }
+`;
+
+export const EmptyCart = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 0 1rem;
+
+  p {
+    font-size: 1.25rem;
+    line-height: 130%;
+    color: ${({ theme }) => theme.colors['base-subtitle']};
+  }
+
+  a {
+    display: inline-block;
+    color: ${({ theme }) => theme.colors['yellow-dark']};
+    text-decoration: underline;
+    transition: color 0.2s ease-in;
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.yellow};
+    }
   }
 `;

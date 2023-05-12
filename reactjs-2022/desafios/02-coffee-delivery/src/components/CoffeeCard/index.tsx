@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { BuyContainer, CardContainer, TagsContainer } from './styles';
 
 import { Minus, Plus, ShoppingCartSimple } from 'phosphor-react';
+import { CartContext } from '../../contexts/CartContext';
+import { priceFormat } from '../../utils/priceFormat';
 
 interface CoffeeCardProps {
   coffee: {
@@ -17,6 +19,7 @@ interface CoffeeCardProps {
 
 export const CoffeeCard = ({ coffee }: CoffeeCardProps) => {
   const [coffeeCounter, setCoffeeCounter] = useState(1);
+  const { addItem } = useContext(CartContext);
 
   return (
     <CardContainer>
@@ -33,12 +36,7 @@ export const CoffeeCard = ({ coffee }: CoffeeCardProps) => {
 
       <BuyContainer>
         <span>
-          R${' '}
-          <strong>
-            {new Intl.NumberFormat('pt-BR', {
-              minimumSignificantDigits: 3,
-            }).format(coffee.price)}
-          </strong>
+          R$ <strong>{priceFormat(coffee.price).replace('R$', '')}</strong>
         </span>
 
         <div className="actions">
@@ -62,7 +60,9 @@ export const CoffeeCard = ({ coffee }: CoffeeCardProps) => {
             </button>
           </div>
 
-          <button>
+          <button
+            onClick={() => addItem({ ...coffee, quantity: coffeeCounter })}
+          >
             <ShoppingCartSimple weight="fill" />
           </button>
         </div>

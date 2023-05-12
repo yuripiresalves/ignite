@@ -40,12 +40,29 @@ export const CartButton = styled.button`
   border-radius: 6px;
   padding: 0.5rem;
   border: none;
-
   display: flex;
   align-items: center;
+  position: relative;
 
   svg {
     width: 1.375rem;
     height: 1.375rem;
+  }
+
+  .cart-items {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    background: ${({ theme }) => theme.colors['yellow-dark']};
+    color: ${({ theme }) => theme.colors.white};
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 130%;
   }
 `;

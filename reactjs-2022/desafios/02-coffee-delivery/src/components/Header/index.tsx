@@ -8,8 +8,13 @@ import {
 
 import Logo from '../../assets/logo.svg';
 import { NavLink } from 'react-router-dom';
+import { useContext } from 'react';
+import { CartContext } from '../../contexts/CartContext';
 
 export const Header = () => {
+  const { items } = useContext(CartContext);
+  const cartItems = items.reduce((acc, item) => acc + item.quantity, 0);
+
   return (
     <HeaderContainer>
       <NavLink to="/">
@@ -22,6 +27,7 @@ export const Header = () => {
           <span>Porto Alegre, RS</span>
         </LocationContainer>
         <CartButton>
+          {cartItems > 0 && <span className="cart-items">{cartItems}</span>}
           <NavLink to="/checkout">
             <ShoppingCartSimple weight="fill" />
           </NavLink>

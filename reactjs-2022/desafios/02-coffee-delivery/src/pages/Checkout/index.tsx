@@ -1,3 +1,6 @@
+import { useContext, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+
 import {
   Bank,
   CreditCard,
@@ -11,6 +14,7 @@ import {
 import {
   AddressForm,
   AdrressPayContainer,
+  EmptyCart,
   MainContainer,
   Order,
   OrderContainer,
@@ -22,12 +26,35 @@ import {
   PaymentMethods,
 } from './styles';
 
-import cafeImg from '../../assets/tradicional.png';
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { CartContext } from '../../contexts/CartContext';
+import { priceFormat } from '../../utils/priceFormat';
 
 export const Checkout = () => {
-  const [coffeeCounter, setCoffeeCounter] = useState(1);
+  const { items, clearCart, shipping, totalPriceItems, removeItem } =
+    useContext(CartContext);
+
+  const [formData, setFormData] = useState({
+    cep: '',
+    street: '',
+    number: '',
+    complement: '',
+    neighborhood: '',
+    city: '',
+    uf: '',
+  });
+  const [paymentMethod, setPaymentMethod] = useState('');
+
+  function finishOrder() {
+    const order = {
+      items,
+      address: formData,
+      paymentMethod,
+      totalPrice: totalPriceItems + shipping,
+    };
+    clearCart();
+
+    console.log(order);
+  }
 
   return (
     <MainContainer>
@@ -43,18 +70,92 @@ export const Checkout = () => {
           </div>
 
           <div className="input-group">
-            <input type="text" placeholder="CEP" />
-            <input type="text" placeholder="Rua" />
+            <input
+              type="text"
+              placeholder="CEP"
+              value={formData.cep
+                .replace(/\D/g, '')
+                .replace(/(\d{5})(\d)/, '$1-$2')
+                .replace(/(-\d{3})\d+?$/, '$1')}
+              onChange={(event) => {
+                setFormData({
+                  ...formData,
+                  cep: event.target.value,
+                });
+              }}
+            />
+            <input
+              type="text"
+              placeholder="Rua"
+              value={formData.street}
+              onChange={(event) => {
+                setFormData({
+                  ...formData,
+                  street: event.target.value,
+                });
+              }}
+            />
 
             <div>
-              <input type="text" placeholder="Número" />
-              <input type="text" placeholder="Complemento" />
+              <input
+                type="text"
+                placeholder="Número"
+                value={formData.number.replace(/\D/g, '')}
+                onChange={(event) => {
+                  setFormData({
+                    ...formData,
+                    number: event.target.value,
+                  });
+                }}
+              />
+              <input
+                type="text"
+                placeholder="Complemento"
+                value={formData.complement}
+                onChange={(event) => {
+                  setFormData({
+                    ...formData,
+                    complement: event.target.value,
+                  });
+                }}
+              />
             </div>
 
             <div>
-              <input type="text" placeholder="Bairro" />
-              <input type="text" placeholder="Cidade" />
-              <input id="UF" type="text" placeholder="UF" />
+              <input
+                type="text"
+                placeholder="Bairro"
+                value={formData.neighborhood}
+                onChange={(event) => {
+                  setFormData({
+                    ...formData,
+                    neighborhood: event.target.value,
+                  });
+                }}
+              />
+              <input
+                type="text"
+                placeholder="Cidade"
+                value={formData.city}
+                onChange={(event) => {
+                  setFormData({
+                    ...formData,
+                    city: event.target.value,
+                  });
+                }}
+              />
+              <input
+                id="UF"
+                type="text"
+                placeholder="UF"
+                value={formData.uf}
+                onChange={(event) => {
+                  setFormData({
+                    ...formData,
+                    uf: event.target.value,
+                  });
+                }}
+              />
             </div>
           </div>
         </AddressForm>
@@ -70,7 +171,11 @@ export const Checkout = () => {
             </div>
           </div>
 
-          <PaymentMethods>
+          <PaymentMethods
+            onChange={(event: any) => {
+              setPaymentMethod(event.target.value);
+            }}
+          >
             <PaymentMethod>
               <input
                 type="radio"
@@ -105,103 +210,98 @@ export const Checkout = () => {
       <OrderContainer>
         <h2>Cafés selecionados</h2>
         <Order>
-          <OrderItem>
-            <OrderInfo>
-              <img src={cafeImg} alt="Café" />
+          {items.length > 0 ? (
+            <>
+              {items.map((item) => (
+                <OrderItem key={item.id}>
+                  <OrderInfo>
+                    <img src={item.image} alt="" />
 
-              <div>
-                <h3>Expresso Tradicional</h3>
+                    <div>
+                      <h3>{item.name}</h3>
 
-                <div className="actions">
-                  <div className="counter">
-                    <button
-                      onClick={() => {
-                        if (coffeeCounter > 1) {
-                          setCoffeeCounter(coffeeCounter - 1);
-                        }
-                      }}
-                    >
-                      <Minus weight="bold" />
-                    </button>
-                    <span>{coffeeCounter}</span>
-                    <button
-                      onClick={() => {
-                        setCoffeeCounter(coffeeCounter + 1);
-                      }}
-                    >
-                      <Plus weight="bold" />
-                    </button>
-                  </div>
+                      <div className="actions">
+                        <div className="counter">
+                          <button
+                            onClick={() => {
+                              if (item.quantity > 1) {
+                                // setItems((prev) =>
+                                //   prev.map((prevItem) => {
+                                //     if (prevItem.id === item.id) {
+                                //       prevItem.quantity -= 1;
+                                //       return prevItem;
+                                //     }
+                                //   })
+                                // );
+                              }
+                            }}
+                          >
+                            <Minus weight="bold" />
+                          </button>
+                          <span>{item.quantity}</span>
+                          <button
+                            onClick={() => {
+                              // setItems((prev) =>
+                              //   prev.map((prevItem) => {
+                              //     if (prevItem.id === item.id) {
+                              //       prevItem.quantity += 1;
+                              //       return prevItem;
+                              //     }
+                              //   })
+                              // );
+                            }}
+                          >
+                            <Plus weight="bold" />
+                          </button>
+                        </div>
 
-                  <button>
-                    <Trash />
-                    <span>Remover</span>
-                  </button>
-                </div>
-              </div>
-            </OrderInfo>
+                        <button onClick={() => removeItem(item.id)}>
+                          <Trash />
+                          <span>Remover</span>
+                        </button>
+                      </div>
+                    </div>
+                  </OrderInfo>
 
-            <p>R$ 9,90</p>
-          </OrderItem>
+                  <p>{priceFormat(item.price)}</p>
+                </OrderItem>
+              ))}
 
-          <OrderItem>
-            <OrderInfo>
-              <img src={cafeImg} alt="Café" />
+              <OrderTotal>
+                <p>
+                  <span>Total de itens</span>
+                  <span>{priceFormat(totalPriceItems)}</span>
+                </p>
+                <p>
+                  <span>Entrega</span>
+                  <span>{priceFormat(shipping)}</span>
+                </p>
 
-              <div>
-                <h3>Expresso Tradicional</h3>
+                <h3>
+                  <span>Total</span>
+                  <span>{priceFormat(totalPriceItems + shipping)}</span>
+                </h3>
+              </OrderTotal>
 
-                <div className="actions">
-                  <div className="counter">
-                    <button
-                      onClick={() => {
-                        if (coffeeCounter > 1) {
-                          setCoffeeCounter(coffeeCounter - 1);
-                        }
-                      }}
-                    >
-                      <Minus weight="bold" />
-                    </button>
-                    <span>{coffeeCounter}</span>
-                    <button
-                      onClick={() => {
-                        setCoffeeCounter(coffeeCounter + 1);
-                      }}
-                    >
-                      <Plus weight="bold" />
-                    </button>
-                  </div>
-
-                  <button>
-                    <Trash />
-                    <span>Remover</span>
-                  </button>
-                </div>
-              </div>
-            </OrderInfo>
-
-            <p>R$ 9,90</p>
-          </OrderItem>
-
-          <OrderTotal>
-            <p>
-              <span>Total de itens</span>
-              <span>R$ 29,70</span>
-            </p>
-            <p>
-              <span>Entrega</span>
-              <span>R$ 3,50</span>
-            </p>
-
-            <h3>
-              <span>Total</span>
-              <span>R$ 33,20</span>
-            </h3>
-          </OrderTotal>
-
-          <NavLink to="/success" className="confirm-order">
-            Confirmar pedido
-          </NavLink>
+              <button
+                disabled={
+                  !Object.keys(formData).every((key) => {
+                    if (key === 'complement') return true;
+                    return formData[key as keyof typeof formData] !== '';
+                  }) || !paymentMethod
+                }
+                className="confirm-order"
+                onClick={finishOrder}
+              >
+                <NavLink to="/success">Confirmar pedido</NavLink>
+              </button>
+            </>
+          ) : (
+            <EmptyCart>
+              <p>Seu carrinho está vazio :(</p>
+              <NavLink to="/">Voltar às compras</NavLink>
+            </EmptyCart>
+          )}
         </Order>
       </OrderContainer>
     </MainContainer>

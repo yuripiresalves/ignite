@@ -88,6 +88,11 @@ export const BuyContainer = styled.div`
         background: transparent;
         border: none;
         color: ${({ theme }) => theme.colors.purple};
+        transition: all 0.2s ease-in;
+
+        &:hover {
+          color: ${({ theme }) => theme.colors['purple-dark']};
+        }
       }
 
       span {

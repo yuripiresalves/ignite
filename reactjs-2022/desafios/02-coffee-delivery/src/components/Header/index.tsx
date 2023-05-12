@@ -22,7 +22,7 @@ export const Header = () => {
           <span>Porto Alegre, RS</span>
         </LocationContainer>
         <CartButton>
-          <NavLink to="/cart">
+          <NavLink to="/checkout">
             <ShoppingCartSimple weight="fill" />
           </NavLink>
         </CartButton>

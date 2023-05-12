@@ -1,24 +1,39 @@
-import { MapPin, Minus, Plus, Trash } from 'phosphor-react';
 import {
+  Bank,
+  CreditCard,
+  CurrencyDollar,
+  MapPin,
+  Minus,
+  Money,
+  Plus,
+  Trash,
+} from 'phosphor-react';
+import {
+  AddressForm,
+  AdrressPayContainer,
   MainContainer,
   Order,
   OrderContainer,
   OrderInfo,
   OrderItem,
   OrderTotal,
+  PaymentContainer,
+  PaymentMethod,
+  PaymentMethods,
 } from './styles';
 
 import cafeImg from '../../assets/tradicional.png';
 import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
-export const Cart = () => {
+export const Checkout = () => {
   const [coffeeCounter, setCoffeeCounter] = useState(1);
 
   return (
     <MainContainer>
-      <div className="address-pay">
+      <AdrressPayContainer>
         <h2>Complete seu pedido</h2>
-        <form>
+        <AddressForm>
           <div className="header">
             <MapPin />
             <div className="text">
@@ -30,14 +45,62 @@ export const Cart = () => {
           <div className="input-group">
             <input type="text" placeholder="CEP" />
             <input type="text" placeholder="Rua" />
-            <input type="text" placeholder="Número" />
-            <input type="text" placeholder="Complemento" />
-            <input type="text" placeholder="Bairro" />
-            <input type="text" placeholder="Cidade" />
-            <input type="text" placeholder="UF" />
+
+            <div>
+              <input type="text" placeholder="Número" />
+              <input type="text" placeholder="Complemento" />
+            </div>
+
+            <div>
+              <input type="text" placeholder="Bairro" />
+              <input type="text" placeholder="Cidade" />
+              <input id="UF" type="text" placeholder="UF" />
+            </div>
           </div>
-        </form>
-      </div>
+        </AddressForm>
+
+        <PaymentContainer>
+          <div className="header">
+            <CurrencyDollar />
+            <div className="text">
+              <h3>Pagamento</h3>
+              <p>
+                O pagamento é feito na entrega. Escolha a forma que deseja pagar
+              </p>
+            </div>
+          </div>
+
+          <PaymentMethods>
+            <PaymentMethod>
+              <input
+                type="radio"
+                name="payment"
+                id="creditCard"
+                value="creditCard"
+              />
+              <CreditCard />
+              <label htmlFor="creditCard">Cartão de Crédito</label>
+            </PaymentMethod>
+
+            <PaymentMethod>
+              <input
+                type="radio"
+                name="payment"
+                id="debitCard"
+                value="debitCard"
+              />
+              <Bank />
+              <label htmlFor="debitCard">Cartão de Débito</label>
+            </PaymentMethod>
+
+            <PaymentMethod>
+              <input type="radio" name="payment" id="money" value="money" />
+              <Money />
+              <label htmlFor="money">Dinheiro</label>
+            </PaymentMethod>
+          </PaymentMethods>
+        </PaymentContainer>
+      </AdrressPayContainer>
 
       <OrderContainer>
         <h2>Cafés selecionados</h2>
@@ -136,7 +199,9 @@ export const Cart = () => {
             </h3>
           </OrderTotal>
 
-          <button className="confirm-order">Confirmar pedido</button>
+          <NavLink to="/success" className="confirm-order">
+            Confirmar pedido
+          </NavLink>
         </Order>
       </OrderContainer>
     </MainContainer>

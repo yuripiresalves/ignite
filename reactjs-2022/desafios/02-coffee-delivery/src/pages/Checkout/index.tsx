@@ -30,7 +30,7 @@ import { CartContext } from '../../contexts/CartContext';
 import { priceFormat } from '../../utils/priceFormat';
 
 export const Checkout = () => {
-  const { items, clearCart, shipping, totalPriceItems, removeItem } =
+  const { items, clearCart, shipping, totalPriceItems, removeItem, setItems } =
     useContext(CartContext);
 
   const [formData, setFormData] = useState({
@@ -225,14 +225,14 @@ export const Checkout = () => {
                           <button
                             onClick={() => {
                               if (item.quantity > 1) {
-                                // setItems((prev) =>
-                                //   prev.map((prevItem) => {
-                                //     if (prevItem.id === item.id) {
-                                //       prevItem.quantity -= 1;
-                                //       return prevItem;
-                                //     }
-                                //   })
-                                // );
+                                const newItems = items.map((i) => {
+                                  if (i.id === item.id) {
+                                    return { ...i, quantity: i.quantity - 1 };
+                                  } else {
+                                    return i;
+                                  }
+                                });
+                                setItems(newItems);
                               }
                             }}
                           >
@@ -241,14 +241,14 @@ export const Checkout = () => {
                           <span>{item.quantity}</span>
                           <button
                             onClick={() => {
-                              // setItems((prev) =>
-                              //   prev.map((prevItem) => {
-                              //     if (prevItem.id === item.id) {
-                              //       prevItem.quantity += 1;
-                              //       return prevItem;
-                              //     }
-                              //   })
-                              // );
+                              const newItems = items.map((i) => {
+                                if (i.id === item.id) {
+                                  return { ...i, quantity: i.quantity + 1 };
+                                } else {
+                                  return i;
+                                }
+                              });
+                              setItems(newItems);
                             }}
                           >
                             <Plus weight="bold" />

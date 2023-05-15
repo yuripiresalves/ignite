@@ -1,11 +1,7 @@
 import { styled } from 'styled-components';
 
-import heroBg from '../../assets/bg.svg';
-
 export const HeroSection = styled.section`
   min-height: 544px;
-  /* background: url(${heroBg}) no-repeat; */
-  background-size: cover;
   display: flex;
   align-items: flex-start;
   padding-top: 94px;

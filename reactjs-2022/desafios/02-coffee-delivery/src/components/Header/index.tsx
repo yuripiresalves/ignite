@@ -26,12 +26,12 @@ export const Header = () => {
           <MapPin weight="fill" />
           <span>Porto Alegre, RS</span>
         </LocationContainer>
-        <CartButton>
-          {cartItems > 0 && <span className="cart-items">{cartItems}</span>}
-          <NavLink to="/checkout">
+        <NavLink to="/checkout">
+          <CartButton>
+            {cartItems > 0 && <span className="cart-items">{cartItems}</span>}
             <ShoppingCartSimple weight="fill" />
-          </NavLink>
-        </CartButton>
+          </CartButton>
+        </NavLink>
       </RightContainer>
     </HeaderContainer>
   );

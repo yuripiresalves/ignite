@@ -16,7 +16,6 @@ interface CartContextType {
   setItems: (items: Item[]) => void;
   addItem: (item: Item) => void;
   removeItem: (id: number) => void;
-
   clearCart: () => void;
 }
 
@@ -27,12 +26,12 @@ interface CartProviderProps {
 }
 
 export function CartContextProvider({ children }: CartProviderProps) {
-  const storedItemsAsJSON = localStorage.getItem('@coffee-delivey:cart-1.0.0');
+  const storedItemsAsJSON = localStorage.getItem('@coffee-delivery:cart-1.0.0');
   const [items, setItems] = useState<Item[]>(
     storedItemsAsJSON ? JSON.parse(storedItemsAsJSON) : []
   );
 
-  const shipping = 0; //3.5;
+  const shipping = 3.5;
   const totalPriceItems = items.reduce((acc, item) => {
     return acc + item.price * item.quantity;
   }, 0);
@@ -49,30 +48,18 @@ export function CartContextProvider({ children }: CartProviderProps) {
 
       setItems(newItems);
       const newItemsAsJSON = JSON.stringify(newItems);
-      localStorage.setItem('@coffee-delivey:cart-1.0.0', newItemsAsJSON);
-      toast('Item adicionado ao carrinho!', {
+      localStorage.setItem('@coffee-delivery:cart-1.0.0', newItemsAsJSON);
+      toast.success('Item adicionado ao carrinho!', {
         position: 'top-center',
-        theme: 'dark',
-        style: {
-          background: '#fff',
-          color: '#000',
-        },
-        icon: '🛒',
       });
       return;
     }
 
     setItems([...items, item]);
     const newItemsAsJSON = JSON.stringify([...items, item]);
-    localStorage.setItem('@coffee-delivey:cart-1.0.0', newItemsAsJSON);
-    toast('Item adicionado ao carrinho!', {
+    localStorage.setItem('@coffee-delivery:cart-1.0.0', newItemsAsJSON);
+    toast.success('Item adicionado ao carrinho!', {
       position: 'top-center',
-      theme: 'dark',
-      style: {
-        background: '#fff',
-        color: '#000',
-      },
-      icon: '🛒',
     });
   }
 
@@ -81,21 +68,15 @@ export function CartContextProvider({ children }: CartProviderProps) {
 
     setItems(filteredItems);
     const filteredItemsAsJSON = JSON.stringify(filteredItems);
-    localStorage.setItem('@coffee-delivey:cart-1.0.0', filteredItemsAsJSON);
-    toast('Item removido do carrinho!', {
+    localStorage.setItem('@coffee-delivery:cart-1.0.0', filteredItemsAsJSON);
+    toast.success('Item removido do carrinho!', {
       position: 'top-center',
-      theme: 'dark',
-      style: {
-        background: '#fff',
-        color: '#000',
-      },
-      icon: '🛒',
     });
   }
 
   function clearCart() {
     setItems([]);
-    localStorage.removeItem('@coffee-delivey:cart-1.0.0');
+    localStorage.removeItem('@coffee-delivery:cart-1.0.0');
   }
 
   return (

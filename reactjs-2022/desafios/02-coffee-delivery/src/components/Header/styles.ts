@@ -34,7 +34,7 @@ export const LocationContainer = styled.div`
   }
 `;
 
-export const CartButton = styled.button`
+export const CartButton = styled.div`
   background: ${({ theme }) => theme.colors['yellow-light']};
   color: ${({ theme }) => theme.colors['yellow-dark']};
   border-radius: 6px;

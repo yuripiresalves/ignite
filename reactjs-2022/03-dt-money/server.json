@@ -1,0 +1,52 @@
+{
+  "transactions": [
+    {
+      "id": 1,
+      "description": "Desenvolvimento de website",
+      "type": "income",
+      "category": "Venda",
+      "price": 14000,
+      "createdAt": "2021-03-01T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "description": "Hamburger",
+      "type": "outcome",
+      "category": "Alimentação",
+      "price": 34,
+      "createdAt": "2022-03-01T12:05:34.000Z"
+    },
+    {
+      "id": 3,
+      "description": "Ignite Rocketseat",
+      "type": "outcome",
+      "category": "Educação",
+      "price": 999,
+      "createdAt": "2021-03-01T12:05:34.000Z"
+    },
+    {
+      "id": 4,
+      "description": "Guitarra",
+      "type": "outcome",
+      "category": "Música",
+      "price": 824,
+      "createdAt": "2023-06-04T22:32:00.000Z"
+    },
+    {
+      "description": "Macbook Pro",
+      "price": 7000,
+      "category": "Computador",
+      "type": "outcome",
+      "createdAt": "2023-06-06T16:03:45.094Z",
+      "id": 5
+    },
+    {
+      "description": "teste",
+      "price": 14,
+      "category": "asd",
+      "type": "income",
+      "createdAt": "2023-06-06T16:04:15.782Z",
+      "id": 6
+    }
+  ]
+}

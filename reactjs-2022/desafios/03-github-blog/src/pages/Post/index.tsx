@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Header } from '../../components/Header';
 import { Container } from '../Home/styles';
@@ -9,9 +10,34 @@ import {
   faComment,
 } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import { api } from '../../lib/api';
+
+interface Post {
+  number: string;
+  html_url: string;
+  title: string;
+  comments: number;
+  created_at: string;
+  body: string;
+  user: {
+    login: string;
+  };
+}
 
 export function Post() {
+  const [post, setPost] = useState({} as Post);
+  const { number } = useParams<{ number: string }>();
+
+  useEffect(() => {
+    api
+      .get(`/repos/yuripiresalves/ignite/issues/${number}`)
+      .then((response) => {
+        setPost(response.data);
+      });
+  }, []);
+
   return (
     <>
       <Header />
@@ -22,22 +48,18 @@ export function Post() {
               <FontAwesomeIcon icon={faChevronLeft} />
               VOLTAR
             </NavLink>
-            <a
-              href='https://github.com/yuripiresalves'
-              target='_blank'
-              rel='noreferrer'
-            >
+            <a href={post.html_url} target='_blank' rel='noreferrer'>
               VER NO GITHUB
               <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
             </a>
           </PostActions>
 
-          <h1>JavaScript data types and data structures</h1>
+          <h1>{post.title}</h1>
 
           <PostFooter>
             <span>
               <FontAwesomeIcon icon={faGithub} />
-              yuripiresalves
+              {post.user?.login}
             </span>
 
             <span>
@@ -46,35 +68,15 @@ export function Post() {
             </span>
 
             <span>
-              <FontAwesomeIcon icon={faComment} />5 comentários
+              <FontAwesomeIcon icon={faComment} />
+              {post.comments}{' '}
+              {post.comments === 1 ? 'comentário' : 'comentários'}
             </span>
           </PostFooter>
         </PostHeader>
 
         <PostContent>
-          <strong>
-            Programming languages all have built-in data structures, but these
-            often differ from one language to another.
-          </strong>{' '}
-          This article attempts to list the built-in data structures available
-          in JavaScript and what properties they have. These can be used to
-          build other data structures. Wherever possible, comparisons with other
-          languages are drawn.
-          <br />
-          <br />
-          Dynamic typing
-          <br />
-          JavaScript is a loosely typed and dynamic language. Variables in
-          JavaScript are not directly associated with any particular value type,
-          and any variable can be assigned (and re-assigned) values of all
-          types:
-          <br />
-          <br />
-          let foo = 42; // foo is now a number
-          <br />
-          foo = ‘bar’; // foo is now a string
-          <br />
-          foo = true; // foo is now a boolean
+          <ReactMarkdown>{post.body}</ReactMarkdown>
         </PostContent>
       </Container>
     </>

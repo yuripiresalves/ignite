@@ -83,7 +83,49 @@ export const PostFooter = styled.div`
   }
 `;
 
-export const PostContent = styled.div`
+export const PostContent = styled.article`
   width: 100%;
   padding: 4rem 3.2rem;
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  ul {
+    margin-bottom: 2rem;
+  }
+
+  li {
+    margin-bottom: 1rem;
+    margin-left: 4rem;
+  }
+
+  img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+  }
+
+  a {
+    color: ${(props) => props.theme.blue};
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  pre {
+    background-color: ${(props) => props.theme['base-profile']};
+    padding: 1.6rem;
+    border-radius: 10px;
+    overflow-x: auto;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 575px) {
+    padding: 2rem 1.6rem;
+  }
 `;

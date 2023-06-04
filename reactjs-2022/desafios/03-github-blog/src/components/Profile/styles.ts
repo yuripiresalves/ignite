@@ -37,6 +37,7 @@ export const ProfileContainer = styled.div`
 `;
 
 export const ContentContainer = styled.div`
+  width: 100%;
   p {
     margin: 0.8rem 0 2.4rem;
     display: -webkit-box;

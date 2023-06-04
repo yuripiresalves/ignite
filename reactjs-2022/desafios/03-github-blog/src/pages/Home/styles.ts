@@ -63,7 +63,6 @@ export const PostCard = styled(NavLink)`
 
   p {
     display: -webkit-box;
-    -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -84,7 +83,6 @@ export const PostCardHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
   margin-bottom: 2rem;
 
   h3 {
@@ -97,6 +95,12 @@ export const PostCardHeader = styled.div`
   span {
     font-size: 1.4rem;
     color: ${(props) => props.theme['base-span']};
+  }
+
+  @media (max-width: 991px) {
+    h3 {
+      max-width: 80%;
+    }
   }
 
   @media (max-width: 560px) {

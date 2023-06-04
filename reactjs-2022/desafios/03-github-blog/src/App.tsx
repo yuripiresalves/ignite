@@ -3,6 +3,7 @@ import { defaultTheme } from './styles/themes/default';
 import { GlobalStyle } from './styles/global';
 import { BrowserRouter } from 'react-router-dom';
 import { Router } from './Router';
+import { PostsProvider } from './contexts/PostsContext';
 
 export function App() {
   return (
@@ -10,7 +11,9 @@ export function App() {
       <GlobalStyle />
 
       <BrowserRouter>
-        <Router />
+        <PostsProvider>
+          <Router />
+        </PostsProvider>
       </BrowserRouter>
     </ThemeProvider>
   );

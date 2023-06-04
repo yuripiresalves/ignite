@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { Header } from '../../components/Header';
 import { Profile } from '../../components/Profile';
 import {
@@ -10,33 +10,14 @@ import {
   PostsHeaderInfo,
 } from './styles';
 import { SearchForm } from '../../components/SearchForm';
-import { api } from '../../lib/api';
 import {
   dateFormatterWithHour,
   dateFromNowFormatter,
 } from '../../utils/formatter';
-
-interface PostCard {
-  number: string;
-  title: string;
-  created_at: string;
-  body: string;
-}
+import { PostsContext } from '../../contexts/PostsContext';
 
 export function Home() {
-  const [posts, setPosts] = useState<PostCard[]>([]);
-
-  useEffect(() => {
-    api
-      .get('/search/issues', {
-        params: {
-          q: 'repo:yuripiresalves/ignite',
-        },
-      })
-      .then((response) => {
-        setPosts(response.data.items);
-      });
-  }, []);
+  const { posts } = useContext(PostsContext);
 
   return (
     <>

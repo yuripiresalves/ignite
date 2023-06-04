@@ -43,7 +43,12 @@ export const SearchFormContainer = styled.form`
     transition: all 0.2s;
     cursor: pointer;
 
-    &:hover {
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    &:not(:disabled):hover {
       background-color: ${(props) => props.theme.blue};
       color: ${(props) => props.theme.white};
     }
@@ -61,6 +66,7 @@ export const SearchFormContainer = styled.form`
       width: 100%;
       background-color: ${(props) => props.theme.blue};
       color: ${(props) => props.theme.white};
+
       &:hover {
         background-color: ${(props) => props.theme['base-background']};
         color: ${(props) => props.theme.blue};

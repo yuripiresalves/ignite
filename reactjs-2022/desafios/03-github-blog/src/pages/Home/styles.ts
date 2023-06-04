@@ -84,7 +84,7 @@ export const PostCardHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.6rem;
+  gap: 1.5rem;
   margin-bottom: 2rem;
 
   h3 {

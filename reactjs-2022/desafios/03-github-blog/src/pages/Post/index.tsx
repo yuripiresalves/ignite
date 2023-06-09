@@ -13,6 +13,10 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { NavLink, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { api } from '../../lib/api';
+import {
+  dateFormatterWithHour,
+  dateFromNowFormatter,
+} from '../../utils/formatter';
 
 interface Post {
   number: string;
@@ -62,9 +66,9 @@ export function Post() {
               {post.user?.login}
             </span>
 
-            <span>
+            <span title={dateFormatterWithHour(post.created_at)}>
               <FontAwesomeIcon icon={faCalendarDay} />
-              Há 1 dia
+              {dateFromNowFormatter(post.created_at)}
             </span>
 
             <span>

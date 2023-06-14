@@ -87,7 +87,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     props: {
       customerName,
       quantity,
-      products: products.map((product) => ({
+      products: products.map((product: any) => ({
         imageUrl: product.price.product.images[0],
       })),
     },

@@ -4,11 +4,9 @@ import {
   ProductContainer,
   ProductDetails,
 } from '@/styles/pages/product';
-import axios from 'axios';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useState } from 'react';
 import { toast } from 'react-toastify';
 import Stripe from 'stripe';
 import { useShoppingCart } from 'use-shopping-cart';
@@ -31,7 +29,7 @@ export default function Product({ product }: ProductProps) {
 
   async function handleAddToCart() {
     try {
-      addItem(product);
+      addItem(product as any);
       toast('Produto adicionado na sacola', {
         type: 'success',
         position: 'top-center',
@@ -66,12 +64,7 @@ export default function Product({ product }: ProductProps) {
 
           <p>{product.description}</p>
 
-          <button
-            // disabled={isCreatingCheckoutSession}
-            onClick={handleAddToCart}
-          >
-            Colocar na sacola
-          </button>
+          <button onClick={handleAddToCart}>Colocar na sacola</button>
         </ProductDetails>
       </ProductContainer>
     </>

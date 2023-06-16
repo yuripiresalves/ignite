@@ -9,7 +9,7 @@ export const Text = styled('p', {
 
   variants: {
     size: {
-      xxs: { fontSize: '' },
+      xxs: { fontSize: '$xxs' },
       xs: { fontSize: '$xs' },
       sm: { fontSize: '$sm' },
       md: { fontSize: '$md' },
@@ -33,3 +33,5 @@ export const Text = styled('p', {
 export interface TextProps extends ComponentProps<typeof Text> {
   as?: ElementType;
 }
+
+Text.displayName = 'Text';
